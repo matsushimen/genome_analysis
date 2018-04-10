@@ -26,7 +26,7 @@ while(my $line = <IN>){
                     push @score,$data[3];
                 }
                 else{
-                    if($end-$start>=$length_u){
+                    if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
                         print "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
                     }
                     $start = -1;
@@ -36,7 +36,7 @@ while(my $line = <IN>){
         }
         else{
             if($start != -1){
-                if($end-$start>=$length_u){
+                if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
                     print "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
                 }
                 $start = -1;
@@ -45,7 +45,7 @@ while(my $line = <IN>){
     }
     else{
         if($start!=-1){
-            if($end-$start>$length_u){
+            if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
                 print "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
             }
         }
