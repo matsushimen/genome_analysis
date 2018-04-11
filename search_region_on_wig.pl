@@ -1,8 +1,34 @@
 use Statistics::Lite qw(:all);
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
-my ($INPUT ,$border_u,$border_t, $length_u, $length_t) = (None,0,0,0,3000000000);
-GetOptions('input|i=s' => \$INPUT, 'low|l=f' => \$border_u, 'high|h=f' => \$border_t, 'short|s=f' => \$length_u, 'big|b=f' => \$length_t);
-print "$border_u\n";
+#オプション処理
+my ($INPUT ,$border_u,$border_t, $length_u, $length_t, $help) = ("",0,0,0,3000000000,0);
+GetOptions('input|i=s' => \$INPUT, 'bottom|b=f' => \$border_u, 'top|t=f' => \$border_t, 'short|s=f' => \$length_u, 'long|l=f' => \$length_t, 'help|h=i' => \$help);
+
+if($help == 1){
+    my $message = <<'EOS';
+[-i] [-input] : path of wiggle file
+[-b] [-bottom] : bottom border of score
+[-t] [-top] : top border of score
+[-s] [-short] : minimum length
+[-l] [-long] : maximum length
+EOS
+    print "$message\n";
+    exit(0);
+}
+print "\n\n",$INPUT,"\n";
+if($INPUT eq ""){
+    print "Error : no file inputted.\n";
+    my $message = <<'EOS';
+[-i] [-input] : path of wiggle file
+[-b] [-bottom] : bottom border of score
+[-t] [-top] : top border of score
+[-s] [-short] : minimum length
+[-l] [-long] : maximum length
+EOS
+    print "hint : \n$message\n";
+    exit(1);
+}
+
 open IN,"$INPUT"or die;
 $start = -1;
 $end = -1;
