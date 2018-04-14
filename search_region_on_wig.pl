@@ -44,12 +44,12 @@ while(my $line = <IN>){
                 $end = $data[2];
                 $chr = $data[0];
                 @score = ();
-                push @score,$data[3];
+                push @score,$data[3]*($data[2]-$data[1]+1);
             }
             else{
                 if($end >= $data[1]){#一つ前のデータの終わりから繋がっているか
                     $end = $data[2];
-                    push @score,$data[3];
+                    push @score,$data[3]*($data[2]-$data[1]+1);
                 }
                 else{
                     if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
