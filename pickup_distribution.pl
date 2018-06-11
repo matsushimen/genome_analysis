@@ -30,26 +30,60 @@ if($INPUT_POS eq ""){
     exit(1);
 }
 
+my @left = ();
+my @right = ();
+for(my $i = 0;$i < $length;$i++){
+    $left[$i] = 0;
+    $right[$i] = 0;
+    $left_n = 0;
+    $right_n = 0;
+}
+
+my $OPEN_FLUG = 1
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
+    chomp $line_pos;
     my @tmp_data = split $line_pos," ";
-    if($method==0){
+    if($METHOD==0){
         my $LS = $tmp_data[2] - $length;
         my $LE = $tmp_data[2];
         my $RS = $tmp_data[1];
         my $RE = $tmp_data[1] + $length;
     }
-    elsif($method==1){
+    elsif($METHOD==1){
         my $LS = $tmp_data[1] - $length;
         my $LE = $tmp_data[1];
         my $RS = $tmp_data[2];
         my $RE = $tmp_data[2] + $length;
     }
-    elsif($method==2){
+    elsif($METHOD==2){
         my $LS = $tmp_data[1] + $inner - $length;
         my $LE = $tmp_data[1] + $inner;
         my $RS = $tmp_data[2] - $inner;
         my $RE = $tmp_data[1] - $inner + $length;
     }
+    if($OPEN_FLUG){
+        open WIG,"$INPUT_WIG";
+        $OPEN_FLUG = 0;
+    }
+    while(my $line_wig = <WIG>){
+        chomp $line_wig;
+        if($line_wig =~ /#/){next};
+        my @wig_data = split $line_wig;
+        my $WS = $wig_data[1];
+        my $WE = $wig_data[2];
+        my $score = $wig_data[3];
+        
+        if((($LS<$WS)&&($WS<$LE))||(($LS<$WE)&&($WE<$LE))){
+            $left[$i] += $score;
+            $left_n[$i]++;
+        }
+        if((($RS<$WS)&&($WS<$RE))||(($RS<$WE)&&($WE<$RE))){
+            $right[$i] += $score;
+            $right_n[$i]++;
+        }
+        if()
+    }
+    
     
 }
