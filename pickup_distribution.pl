@@ -86,6 +86,7 @@ while(my $line_pos = <POS>){
             }
             for(my $i = 0;$i < $WE-$WS;$i++){#push score to @left
                 if($left_pos==$length){
+                    print "hogehoge\n";
                     last;
                 }
                 $left[$left_pos] += $score;
