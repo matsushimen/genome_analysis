@@ -16,7 +16,7 @@ EOS
     print "$message\n";
     exit(0);
 }
-print "\n\n",$INPUT,"\n";
+print "\n\n",$INPUT_POS,"\n";
 if($INPUT_POS eq ""){
     print "Error : no file inputted.\n";
     my $message = <<'EOS';
@@ -42,7 +42,7 @@ for(my $i = 0;$i < $length;$i++){
 }
 
 my $OPEN_FLUG = 1
-open POS,"$INPUT_POS"or die;
+open POS,"$INPUT_POS"or die("$INPUT_POS");
 while(my $line_pos = <POS>){
     chomp $line_pos;
     my @tmp_data = split $line_pos," ";
