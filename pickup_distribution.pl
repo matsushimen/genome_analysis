@@ -99,6 +99,7 @@ while(my $line_pos = <POS>){
             for(my $i = 0;$i < $WE-$WS;$i++){
                 if($right_pos == $length){
                     last;
+                    print("hoge\n")
                 }
                 $right[$right_pos] += $score;
                 $rignt_v[$right_pos] += $score*$score;
@@ -113,7 +114,7 @@ close OUT;
 close WIG;
 open OUT,"> $OUTPUT_NAME";
 for(my $i = 0;$i < $length;$i++){
-    if($left_n[i] == 0){
+    if($left_n[$i] == 0){
         $left_n[$i] = 1;
     }
     $mean = $left[$i]/$left_n[$i];
@@ -121,7 +122,7 @@ for(my $i = 0;$i < $length;$i++){
     print OUT "$i $mean $variant\n"
 }
 for(my $i = 0;$i < $length;$i++){
-    if($right_n[i] == 0){
+    if($right_n[$i] == 0){
         $right_n[$i] = 1;
     }
     $mean = $right[$i]/$right_n[$i];
