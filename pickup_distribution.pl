@@ -41,7 +41,7 @@ for(my $i = 0;$i < $length;$i++){
     $right_n[$i] = 0;
 }
 
-my $OPEN_FLUG = 1
+my $OPEN_FLUG = 1;
 open POS,"$INPUT_POS"or die("$INPUT_POS");
 while(my $line_pos = <POS>){
     chomp $line_pos;
