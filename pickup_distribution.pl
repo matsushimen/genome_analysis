@@ -86,6 +86,7 @@ while(my $line_pos = <POS>){
         if((($LS<$WS)&&($WS<$LE))||(($LS<$WE)&&($WE<$LE))){
             if($left_pos == 0){#first time at left, remind the position of start
                 $SP = tell(WIG);
+                $left_last = $LS;
             }
             else{
                 for(my $i = 0;$i < $WS- $left_last;$i++){
@@ -105,7 +106,10 @@ while(my $line_pos = <POS>){
             }
         }
         if((($RS<$WS)&&($WS<$RE))||(($RS<$WE)&&($WE<$RE))){
-            if($right_pos != 0){
+            if($right_pos == 0){
+                $right_last = $RS;
+            }
+            else{
                 for(my $i = 0;$i < $WS- $right_last;$i++){
                     $right_pos++;
                 }
