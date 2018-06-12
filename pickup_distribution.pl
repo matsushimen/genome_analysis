@@ -113,10 +113,9 @@ while(my $line_pos = <POS>){
             for(my $i = 0;$i < $WE-$WS;$i++){
                 if($right_pos == $length){
                     last;
-                    
                 }
                 $right[$right_pos] += $score;
-                $rignt_v[$right_pos] += $score*$score;
+                $right_v[$right_pos] += $score*$score;
                 $right_n[$right_pos]++;
                 $right_pos++;
                 $right_last = $WE;
@@ -136,16 +135,16 @@ for(my $i = 0;$i < $length;$i++){
         $left_n[$i] = 1;
     }
     $mean = $left[$i]/$left_n[$i];
-    $variant = $left_v[$i]/$left_n[$i]-$mean*$mean;
-    print OUT "$i $mean $variant $left_n[$i]\n"
+    $variance = $left_v[$i]/$left_n[$i]-$mean*$mean;
+    print OUT "$i $mean $variance $left_n[$i]\n"
 }
 for(my $i = 0;$i < $length;$i++){
     if($right_n[$i] == 0){
         $right_n[$i] = 1;
     }
     $mean = $right[$i]/$right_n[$i];
-    $variant = $right_v[$i]/$right_n[$i]-$mean*$mean;
+    $variance = $right_v[$i]/$right_n[$i]-$mean*$mean;
     my $num = $i + $length;
-    print OUT "$num $mean $variant $right_n[$i]\n"
+    print OUT "$num $mean $variance $right_n[$i]\n"
 }
 close OUT;
