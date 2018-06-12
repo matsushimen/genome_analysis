@@ -35,8 +35,10 @@ my @right = ();
 for(my $i = 0;$i < $length;$i++){
     $left[$i] = 0;
     $right[$i] = 0;
-    $left_n = 0;
-    $right_n = 0;
+    $left_v[$i] = 0;
+    $right_v[$i] = 0;
+    $left_n[$i] = 0;
+    $right_n[$i] = 0;
 }
 
 my $OPEN_FLUG = 1
@@ -63,27 +65,67 @@ while(my $line_pos = <POS>){
         my $RE = $tmp_data[1] - $inner + $length;
     }
     if($OPEN_FLUG){
-        open WIG,"$INPUT_WIG";
+        open WIG,"$INPUT_WIG"or die;
         $OPEN_FLUG = 0;
     }
+    my $left_pos = 0;#leftに入っているスコアの数
+    my $right_pos = 0;#rightに入っているスコアの数
+    
     while(my $line_wig = <WIG>){
         chomp $line_wig;
-        if($line_wig =~ /#/){next};
+        if($line_wig =~ //){next};#skip header
         my @wig_data = split $line_wig;
-        my $WS = $wig_data[1];
-        my $WE = $wig_data[2];
-        my $score = $wig_data[3];
+        my $WS = $wig_data[1];#wig : start
+        my $WE = $wig_data[2];#wig : end
+        my $score = $wig_data[3];#wig : score
         
         if((($LS<$WS)&&($WS<$LE))||(($LS<$WE)&&($WE<$LE))){
-            $left[$i] += $score;
-            $left_n[$i]++;
+            if($left_pos ==0){#first time at left, remind the position of start
+                $SP = tell(WIG);
+            }
+            for(my $i = 0;$i < $WE-$WS;$i++){#push score to @left
+                if($left_pos==$length){
+                    last;
+                }
+                $left[$left_pos] += $score;
+                $left_v[$left_pos] += $score*$score;
+                $left_n[$left_pos]++;
+                $left_pos++;
+                
+            }
         }
         if((($RS<$WS)&&($WS<$RE))||(($RS<$WE)&&($WE<$RE))){
-            $right[$i] += $score;
-            $right_n[$i]++;
+            for(my $i = 0;$i < $WE-$WS;$i++){
+                if($right_pos == $length){
+                    last;
+                }
+                $right[$right_pos] += $score;
+                $rignt_v[$right_pos] += $score*$score;
+                $right_n[$right_pos]++;
+                $right_pos++;
+            }
         }
-        if()
     }
-    
-    
+    seek(WIG,0,$SP);
 }
+close OUT;
+close WIG;
+open OUT,"> $OUTPUT_NAME";
+for(my $i = 0;$i < $length;$i++){
+    if($left_n[i] == 0){
+        $left_n[$i] = 1;
+    }
+    $mean = $left[$i]/$left_n[$i];
+    $variant = ($left_v[$i]-$mean*$mean)/$left_n[$i];
+    print OUT "$i $mean $variant\n"
+}
+for(my $i = 0;$i < $length;$i++){
+    if($right_n[i] == 0){
+        $right_n[$i] = 1;
+    }
+    $mean = $right[$i]/$right_n[$i];
+    $variant = ($right_v[$i]-$mean*$mean)/$right_n[$i];
+    my $num = $i + $lengh;
+    print OUT "$num $mean $variant\n"
+}
+close OUT;
