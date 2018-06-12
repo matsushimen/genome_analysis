@@ -42,9 +42,10 @@ for(my $i = 0;$i < $length;$i++){
 }
 
 my $OPEN_FLUG = 1;
-open POS,"$INPUT_POS"or die("$INPUT_POS");
+open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
     chomp $line_pos;
+    print "serching at $line_pos\n";
     my @tmp_data = split $line_pos," ";
     if($METHOD==0){
         my $LS = $tmp_data[2] - $length;
