@@ -30,8 +30,6 @@ EOS
     exit(1);
 }
 
-my @left = ();
-my @right = ();
 for(my $i = 0;$i < $length;$i++){
     $left[$i] = 0;
     $right[$i] = 0;
@@ -83,6 +81,7 @@ while(my $line_pos = <POS>){
         if((($LS<$WS)&&($WS<$LE))||(($LS<$WE)&&($WE<$LE))){
             if($left_pos ==0){#first time at left, remind the position of start
                 $SP = tell(WIG);
+                print "set sp\n"
             }
             for(my $i = 0;$i < $WE-$WS;$i++){#push score to @left
                 if($left_pos==$length){
