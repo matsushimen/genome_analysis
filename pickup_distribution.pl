@@ -98,8 +98,9 @@ while(my $line_pos = <POS>){
         if((($RS<$WS)&&($WS<$RE))||(($RS<$WE)&&($WE<$RE))){
             for(my $i = 0;$i < $WE-$WS;$i++){
                 if($right_pos == $length){
+                    print("hoge\n");
                     last;
-                    print("hoge\n")
+                    
                 }
                 $right[$right_pos] += $score;
                 $rignt_v[$right_pos] += $score*$score;
