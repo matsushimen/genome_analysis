@@ -72,7 +72,7 @@ while(my $line_pos = <POS>){
     
     while(my $line_wig = <WIG>){
         chomp $line_wig;
-        if($line_wig =~ //){next};#skip header
+        if($line_wig =~ /#/){next};#skip header
         my @wig_data = split $line_wig;
         my $WS = $wig_data[1];#wig : start
         my $WE = $wig_data[2];#wig : end
