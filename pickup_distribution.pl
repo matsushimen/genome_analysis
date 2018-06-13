@@ -88,11 +88,11 @@ while(my $line_pos = <POS>){
                 $SP = tell(WIG);
                 $left_last = $LS;
             }
-            else{
-                for(my $i = 0;$i < $WS- $left_last;$i++){
-                    $left_pos++;
-                }
+            
+            for(my $i = 0;$i < $WS- $left_last;$i++){
+                $left_pos++;
             }
+            
             for(my $i = 0;$i < $WE-$WS;$i++){#push score to @left
                 if($left_pos==$length){
                     last;
@@ -109,11 +109,11 @@ while(my $line_pos = <POS>){
             if($right_pos == 0){
                 $right_last = $RS;
             }
-            else{
-                for(my $i = 0;$i < $WS- $right_last;$i++){
-                    $right_pos++;
-                }
+            
+            for(my $i = 0;$i < $WS- $right_last;$i++){
+                $right_pos++;
             }
+            
             for(my $i = 0;$i < $WE-$WS;$i++){
                 if($right_pos == $length){
                     last;
