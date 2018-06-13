@@ -44,7 +44,7 @@ my $OPEN_FLUG = 1;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
     chomp $line_pos;
-    print "serching at $line_pos\n";
+    #print "serching at $line_pos\n";
     my @tmp_data = split /\s/,$line_pos;
     my $LS,$LE,$RS,$RE;
     if($METHOD==0){
@@ -63,7 +63,7 @@ while(my $line_pos = <POS>){
         $LS = $tmp_data[1] + $inner - $length;
         $LE = $tmp_data[1] + $inner;
         $RS = $tmp_data[2] - $inner;
-        $RE = $tmp_data[1] - $inner + $length;
+        $RE = $tmp_data[2] - $inner + $length;
     }
     if($OPEN_FLUG){
         open WIG,"$INPUT_WIG"or die;
@@ -72,8 +72,8 @@ while(my $line_pos = <POS>){
     my $left_pos = 0;#leftに入っているスコアの数
     my $right_pos = 0;#rightに入っているスコアの数
     
-    my $left_last;
-    my $right_last;
+    my $left_last = 0;
+    my $right_last = 0;
     while(my $line_wig = <WIG>){
         chomp $line_wig;
         if($line_wig =~ /#/){
@@ -83,17 +83,19 @@ while(my $line_pos = <POS>){
         my $WS = $wig_data[1];#wig : start
         my $WE = $wig_data[2];#wig : end
         my $score = $wig_data[3];#wig : score
-        if((($LS<$WS)&&($WS<$LE))||(($LS<$WE)&&($WE<$LE))){
+        if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){
             if($left_pos == 0){#first time at left, remind the position of start
                 $SP = tell(WIG);
                 $left_last = $LS;
             }
-            
-            for(my $i = 0;$i < $WS- $left_last;$i++){
-                $left_pos++;
+            if($WS > $left_last){#ギャップの穴埋め
+                for(my $i = 0;$i < $WS - $left_last;$i++){
+                    $left_pos++;
+                }
+                $left_last = $WS;#スタート位置の移動
             }
-            
-            for(my $i = 0;$i < $WE-$WS;$i++){#push score to @left
+
+            for(my $i = 0;$i < $WE - $left_last;$i++){#push score to @left
                 if($left_pos==$length){
                     last;
                 }
@@ -101,34 +103,40 @@ while(my $line_pos = <POS>){
                 $left_v[$left_pos] += $score*$score;
                 $left_n[$left_pos]++;
                 $left_pos++;
-                $left_last = $WE;
-                
             }
+            $left_last = $WE;
         }
-        if((($RS<$WS)&&($WS<$RE))||(($RS<$WE)&&($WE<$RE))){
+        if((($RS<=$WS)&&($WS<=$RE))||(($RS<=$WE)&&($WE<=$RE))){
             if($right_pos == 0){
                 $right_last = $RS;
             }
-            
-            for(my $i = 0;$i < $WS- $right_last;$i++){
-                $right_pos++;
+            if($WS > $right_last){#前回位置から現在位置までのギャップの穴埋め
+                for(my $i = 0;$i < $WS - $right_last;$i++){
+                    $right_pos++;
+                }
+                $right_last = $WS#スタート位置の移動
             }
             
-            for(my $i = 0;$i < $WE-$WS;$i++){
+            for(my $i = 0;$i < $WE - $right_last;$i++){
                 if($right_pos == $length){
+                    #print("hoge\n");
                     last;
+                    
                 }
                 $right[$right_pos] += $score;
                 $right_v[$right_pos] += $score*$score;
                 $right_n[$right_pos]++;
                 $right_pos++;
-                $right_last = $WE;
+                
             }
+            $right_last = $WE;
         }
-        if($WS>$RE){
+    
+        elsif($RE<$WE){
             last;
         }
     }
+#print "$right_pos $left_pos\n";
     seek(WIG,$SP,0);
 }
 close OUT;
