@@ -186,3 +186,4 @@ for(my $i = 0;$i < $length;$i++){
     print OUT "$num $mean $variance $right_n[$i]\n"
 }
 close OUT;
+print "$test\n";
