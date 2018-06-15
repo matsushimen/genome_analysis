@@ -77,7 +77,7 @@ while(my $line_pos = <POS>){
     my $right_last = 0;
     while(my $line_wig = <WIG>){
         chomp $line_wig;
-        if($line_wig =~ /#/){
+        if($line_wig =~ //){
             next;
         }#skip header
         my @wig_data = split /\s/,$line_wig;
@@ -109,6 +109,14 @@ while(my $line_pos = <POS>){
             }
             $left_last = $WE;
         }
+        elsif($LE<$WE){
+            if($left_pos<$length){
+                for(my $i = 0;$i < $length-$left_pos;$i++){
+                    print "-1 ";
+                }
+                $left_pos = $length;
+            }
+        }
         if((($RS<=$WS)&&($WS<=$RE))||(($RS<=$WE)&&($WE<=$RE))){
             if($right_pos == 0){
                 $right_last = $RS;
@@ -135,6 +143,12 @@ while(my $line_pos = <POS>){
             $right_last = $WE;
         }
         elsif($RE<$WE){
+            if($right_pos<$length){
+                for(my $i = 0;$i < $length-$right_pos;$i++){
+                    print "-1 ";
+                }
+            }
+            $right_pos = $length;
             last;
         }
     
