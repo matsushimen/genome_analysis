@@ -45,7 +45,7 @@ open LOG,"> $LOG_NAME"or die;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
     chomp $line_pos;
-    #print "serching at $line_pos\n";
+    print "serching at $line_pos\n";
     my @tmp_data = split /\s/,$line_pos;
     my $LS,$LE,$RS,$RE;
     if($METHOD==0){
@@ -142,7 +142,7 @@ while(my $line_pos = <POS>){
             }
             $right_last = $WE;
         }
-        elsif($RE<$WE){
+        elsif($RE<$WS){
             if($right_pos<$length){
                 for(my $i = 0;$i < $length-$right_pos;$i++){
                     print "-1 ";
