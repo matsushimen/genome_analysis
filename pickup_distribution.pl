@@ -6,13 +6,13 @@ GetOptions('position|p=s' => \$INPUT_POS, 'wiggle|w=s' => \$INPUT_WIG, 'output|o
 
 if($help == 1){
     my $message = <<'EOS';
-    [-p] [-position] : path of position file
-    [-w] [-wiggle] : path of wiggle file
-    [-o] [-output] : path and name of output file
-    [-m] [-method] : normalizing method (reference : README.md)
-    [-l] [-length] : normalizing length
-    [-i] [-inner] : inner length (reference : README.md)
-    EOS
+[-p] [-position] : path of position file
+[-w] [-wiggle] : path of wiggle file
+[-o] [-output] : path and name of output file
+[-m] [-method] : normalizing method (reference : README.md)
+[-l] [-length] : normalizing length
+[-i] [-inner] : inner length (reference : README.md)
+EOS
     print "$message\n";
     exit(0);
 }
@@ -21,12 +21,12 @@ print "\n",$INPUT_POS,"\n";
 if($INPUT_POS eq ""){
     print "Error : no file inputted.\n";
     my $message = <<'EOS';
-    [-p] [-position] : path of position file
-    [-w] [-wiggle] : path of wiggle file
-    [-o] [-output] : path and name of output file
-    [-m] [-method] : normalizing method (reference : README.md)
-    [-l] [-length] : normalizing length
-    EOS
+[-p] [-position] : path of position file
+[-w] [-wiggle] : path of wiggle file
+[-o] [-output] : path and name of output file
+[-m] [-method] : normalizing method (reference : README.md)
+[-l] [-length] : normalizing length
+EOS
     print "hint : \n$message\n";
     exit(1);
 }
