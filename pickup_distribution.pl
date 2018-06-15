@@ -84,8 +84,8 @@ while(my $line_pos = <POS>){
         my $WS = $wig_data[1];#wig : start
         my $WE = $wig_data[2];#wig : end
         my $score = $wig_data[3];#wig : score
-        my @left_tmp;#ベクトル書き出し用
-        my @right_tmp;#ベクトル書き出し用
+        my @left_tmp = ();#ベクトル書き出し用
+        my @right_tmp = ();#ベクトル書き出し用
         if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){
             if($left_pos == 0){#first time at left, remind the position of start
                 $SP = tell(WIG);
@@ -145,11 +145,12 @@ while(my $line_pos = <POS>){
         for(my $i = 0;$i < $length;$i++){
             print LOG "$right_tmp[$i] ";
         }
+        print LOG "\n";
     }
-    
-    print LOG "\n";
+
     seek(WIG,$SP,0);
 }
+close LOG;
 close OUT;
 close WIG;
 open OUT,"> $OUTPUT_NAME"or die;
