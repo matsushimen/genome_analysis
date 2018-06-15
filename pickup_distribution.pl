@@ -30,7 +30,7 @@ EOS
     print "hint : \n$message\n";
     exit(1);
 }
-
+my $test = 0;
 for(my $i = 0;$i < $length;$i++){
     $left[$i] = 0;
     $right[$i] = 0;
@@ -112,7 +112,7 @@ while(my $line_pos = <POS>){
         }
         
         elsif(($LE<$WS)&&($left_pos==0)){
-            print "left\n";
+            print "left $test\n";
             for(my $i = 0;$i < $length;$i++){
                 print LOG "-1 ";
                 $left_pos++;
@@ -146,7 +146,7 @@ while(my $line_pos = <POS>){
         }
         
         if(($RE<$WS)&&($right_pos==0)){
-            print "right\n";
+            print "right $test\n";
             for(my $i = 0;$i < $length;$i++){
                 print LOG "-1 ";
                 $right_pos++;
@@ -158,7 +158,7 @@ while(my $line_pos = <POS>){
         }
     
     }
-
+    $test++;
     print LOG "\n";
 
     seek(WIG,$SP,0);
