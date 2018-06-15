@@ -153,7 +153,7 @@ while(my $line_pos = <POS>){
             }
             last;
         }
-        elsif(($RE<$WS)&&($right_pos!=0)){
+        elsif(($RE<$WS)&&($right_pos==$length)){
             last;
         }
     
