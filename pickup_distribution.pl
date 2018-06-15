@@ -2,7 +2,7 @@
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 #オプション処理
 my ($INPUT_POS ,$INPUT_WIG, $OUTPUT_NAME, $LOG_NAME, $METHOD, $length, $inner, $help) = ("","","","vector.log",0,0,0,0);
-GetOptions('position|p=s' => \$INPUT_POS, 'wiggle|w=s' => \$INPUT_WIG, 'output|o=s' => \$OUTPUT_NAME, 'log|g=s' => \$LOG_NAME 'method|m=f' => \$METHOD, 'length|l=f' => \$length, 'inner|i=f' => \$inner, 'help|h=i' => \$help);
+GetOptions('position|p=s' => \$INPUT_POS, 'wiggle|w=s' => \$INPUT_WIG, 'output|o=s' => \$OUTPUT_NAME, 'log|g=s' => \$LOG_NAME, 'method|m=f' => \$METHOD, 'length|l=f' => \$length, 'inner|i=f' => \$inner, 'help|h=i' => \$help);
 
 if($help == 1){
     my $message = <<'EOS';
