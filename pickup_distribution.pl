@@ -109,7 +109,7 @@ while(my $line_pos = <POS>){
             }
             $left_last = $WE;
         }
-        elsif($LE<$WE){
+        elsif($LE<$WS){
             if($left_pos<$length){
                 for(my $i = 0;$i < $length-$left_pos;$i++){
                     print "-1 ";
