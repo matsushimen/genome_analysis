@@ -1,8 +1,8 @@
 
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 #オプション処理
-my ($INPUT_POS ,$INPUT_WIG, $OUTPUT_NAME, $METHOD, $length, $inner, $help) = ("","","",0,0,0,0);
-GetOptions('position|p=s' => \$INPUT_POS, 'wiggle|w=s' => \$INPUT_WIG, 'output|o=s' => \$OUTPUT_NAME, 'method|m=f' => \$METHOD, 'length|l=f' => \$length, 'inner|i=f' => \$inner, 'help|h=i' => \$help);
+my ($INPUT_POS ,$INPUT_WIG, $OUTPUT_NAME, $LOG_NAME, $METHOD, $length, $inner, $help) = ("","","","vector.log",0,0,0,0);
+GetOptions('position|p=s' => \$INPUT_POS, 'wiggle|w=s' => \$INPUT_WIG, 'output|o=s' => \$OUTPUT_NAME, 'log|g=s' => \$LOG_NAME 'method|m=f' => \$METHOD, 'length|l=f' => \$length, 'inner|i=f' => \$inner, 'help|h=i' => \$help);
 
 if($help == 1){
     my $message = <<'EOS';
@@ -41,6 +41,7 @@ for(my $i = 0;$i < $length;$i++){
 }
 my $SP = 0;
 my $OPEN_FLUG = 1;
+open LOG,"> $LOG_NAME"or die;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
     chomp $line_pos;
@@ -119,7 +120,6 @@ while(my $line_pos = <POS>){
             
             for(my $i = 0;$i < $WE - $right_last;$i++){
                 if($right_pos == $length){
-                    #print("hoge\n");
                     last;
                     
                 }
@@ -131,12 +131,17 @@ while(my $line_pos = <POS>){
             }
             $right_last = $WE;
         }
-    
         elsif($RE<$WE){
             last;
         }
     }
-#print "$right_pos $left_pos\n";
+    for(my $i = 0;$i < $length;$i++){#ベクトル書き出し
+        print LOG "$left[$i]";
+    }
+    for(my $i = 0;$i < $length;$i++){
+        print LOG "$right[$i]";
+    }
+    print LOG,"\n";
     seek(WIG,$SP,0);
 }
 close OUT;
