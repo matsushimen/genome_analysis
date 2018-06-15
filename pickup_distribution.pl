@@ -139,7 +139,7 @@ while(my $line_pos = <POS>){
         }
     
     }
-    if(($right_pos!=0)||($left_pos!=0)){
+    if(($right_pos==$length)&&($left_pos==$length)){
         print LOG "\n";
     }
     seek(WIG,$SP,0);
