@@ -91,7 +91,7 @@ while(my $line_pos = <POS>){
             }
             if($WS > $left_last){#ギャップの穴埋め
                 for(my $i = 0;$i < $WS - $left_last;$i++){
-                    print LOG "* ";
+                    print LOG "-1 ";
                     $left_pos++;
                 }
                 $left_last = $WS;#スタート位置の移動
@@ -115,7 +115,7 @@ while(my $line_pos = <POS>){
             }
             if($WS > $right_last){#前回位置から現在位置までのギャップの穴埋め
                 for(my $i = 0;$i < $WS - $right_last;$i++){
-                    print LOG "* ";
+                    print LOG "-1 ";
                     $right_pos++;
                 }
                 $right_last = $WS#スタート位置の移動
