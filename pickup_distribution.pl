@@ -141,17 +141,17 @@ while(my $line_pos = <POS>){
         }
     }
     for(my $i = 0;$i < $length;$i++){#ベクトル書き出し
-        print LOG "$left_tmp[$i]";
+        print LOG "$left_tmp[$i]" ;
     }
     for(my $i = 0;$i < $length;$i++){
-        print LOG "$right_tmp[$i]";
+        print LOG "$right_tmp[$i] ";
     }
     print LOG "\n";
     seek(WIG,$SP,0);
 }
 close OUT;
 close WIG;
-open OUT,"> $OUTPUT_NAME";
+open OUT,"> $OUTPUT_NAME"or die;
 for(my $i = 0;$i < $length;$i++){
     if($left_n[$i] == 0){
         $left_n[$i] = 1;
