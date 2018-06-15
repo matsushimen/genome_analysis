@@ -128,7 +128,7 @@ while(my $line_pos = <POS>){
                     last;
                 }
                 $right[$right_pos] += $score;
-                $right_tmp = $score;
+                $right_tmp[$right_pos] = $score;
                 $right_v[$right_pos] += $score*$score;
                 $right_n[$right_pos]++;
                 $right_pos++;
