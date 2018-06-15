@@ -146,7 +146,7 @@ while(my $line_pos = <POS>){
     for(my $i = 0;$i < $length;$i++){
         print LOG "$right_tmp[$i]";
     }
-    print LOG,"\n";
+    print LOG "\n";
     seek(WIG,$SP,0);
 }
 close OUT;
