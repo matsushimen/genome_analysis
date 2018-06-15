@@ -6,13 +6,13 @@ GetOptions('position|p=s' => \$INPUT_POS, 'wiggle|w=s' => \$INPUT_WIG, 'output|o
 
 if($help == 1){
     my $message = <<'EOS';
-[-p] [-position] : path of position file
-[-w] [-wiggle] : path of wiggle file
-[-o] [-output] : path and name of output file
-[-m] [-method] : normalizing method (reference : README.md)
-[-l] [-length] : normalizing length
-[-i] [-inner] : inner length (reference : README.md)
-EOS
+    [-p] [-position] : path of position file
+    [-w] [-wiggle] : path of wiggle file
+    [-o] [-output] : path and name of output file
+    [-m] [-method] : normalizing method (reference : README.md)
+    [-l] [-length] : normalizing length
+    [-i] [-inner] : inner length (reference : README.md)
+    EOS
     print "$message\n";
     exit(0);
 }
@@ -21,12 +21,12 @@ print "\n",$INPUT_POS,"\n";
 if($INPUT_POS eq ""){
     print "Error : no file inputted.\n";
     my $message = <<'EOS';
-[-p] [-position] : path of position file
-[-w] [-wiggle] : path of wiggle file
-[-o] [-output] : path and name of output file
-[-m] [-method] : normalizing method (reference : README.md)
-[-l] [-length] : normalizing length
-EOS
+    [-p] [-position] : path of position file
+    [-w] [-wiggle] : path of wiggle file
+    [-o] [-output] : path and name of output file
+    [-m] [-method] : normalizing method (reference : README.md)
+    [-l] [-length] : normalizing length
+    EOS
     print "hint : \n$message\n";
     exit(1);
 }
@@ -45,7 +45,7 @@ open LOG,"> $LOG_NAME"or die;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
     chomp $line_pos;
-    print "serching at $line_pos\n";
+    #print "serching at $line_pos\n";
     my @tmp_data = split /\s/,$line_pos;
     my $LS,$LE,$RS,$RE;
     if($METHOD==0){
@@ -77,86 +77,73 @@ while(my $line_pos = <POS>){
     my $right_last = 0;
     while(my $line_wig = <WIG>){
         chomp $line_wig;
-        if($line_wig =~ //){
+        if($line_wig =~ /#/){
             next;
-        }#skip header
-        my @wig_data = split /\s/,$line_wig;
-        my $WS = $wig_data[1];#wig : start
-        my $WE = $wig_data[2];#wig : end
-        my $score = $wig_data[3];#wig : score
-        if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){
-            if($left_pos == 0){#first time at left, remind the position of start
-                $SP = tell(WIG);
-                $left_last = $LS;
-            }
-            if($WS > $left_last){#ギャップの穴埋め
-                for(my $i = 0;$i < $WS - $left_last;$i++){
-                    print LOG "-1 ";
-                    $left_pos++;
-                }
-                $left_last = $WS;#スタート位置の移動
-            }
-
-            for(my $i = 0;$i < $WE - $left_last;$i++){#push score to @left
-                if($left_pos==$length){
-                    last;
-                }
-                $left[$left_pos] += $score;
-                print LOG "$score ";
-                $left_v[$left_pos] += $score*$score;
-                $left_n[$left_pos]++;
+    }#skip header
+    my @wig_data = split /\s/,$line_wig;
+    my $WS = $wig_data[1];#wig : start
+    my $WE = $wig_data[2];#wig : end
+    my $score = $wig_data[3];#wig : score
+    if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){
+        if($left_pos == 0){#first time at left, remind the position of start
+            $SP = tell(WIG);
+            $left_last = $LS;
+        }
+        if($WS > $left_last){#ギャップの穴埋め
+            for(my $i = 0;$i < $WS - $left_last;$i++){
+                print LOG "-1 ";
                 $left_pos++;
             }
-            $left_last = $WE;
+            $left_last = $WS;#スタート位置の移動
         }
-        elsif(($LE<$WS)&&($left_pos<$length)){
-            for(my $i = 0;$i < $length-$left_pos;$i++){
-                print "-1 ";
+        
+        for(my $i = 0;$i < $WE - $left_last;$i++){#push score to @left
+            if($left_pos==$length){
+                last;
             }
-            $left_pos = $length;
+            $left[$left_pos] += $score;
+            print LOG "$score ";
+            $left_v[$left_pos] += $score*$score;
+            $left_n[$left_pos]++;
+            $left_pos++;
         }
-        if((($RS<=$WS)&&($WS<=$RE))||(($RS<=$WE)&&($WE<=$RE))){
-            if($right_pos == 0){
-                $right_last = $RS;
-            }
-            if($WS > $right_last){#前回位置から現在位置までのギャップの穴埋め
-                for(my $i = 0;$i < $WS - $right_last;$i++){
-                    print LOG "-1 ";
-                    $right_pos++;
-                }
-                $right_last = $WS#スタート位置の移動
-            }
-            
-            for(my $i = 0;$i < $WE - $right_last;$i++){
-                if($right_pos == $length){
-                    last;
-                }
-                $right[$right_pos] += $score;
-                print LOG "$score ";
-                $right_v[$right_pos] += $score*$score;
-                $right_n[$right_pos]++;
+        $left_last = $WE;
+    }
+    if((($RS<=$WS)&&($WS<=$RE))||(($RS<=$WE)&&($WE<=$RE))){
+        if($right_pos == 0){
+            $right_last = $RS;
+        }
+        if($WS > $right_last){#前回位置から現在位置までのギャップの穴埋め
+            for(my $i = 0;$i < $WS - $right_last;$i++){
+                print LOG "-1 ";
                 $right_pos++;
-                
             }
-            $right_last = $WE;
+            $right_last = $WS#スタート位置の移動
         }
-        elsif(($RE<$WS)&&($right_pos<$length)){
-            for(my $i = 0;$i < $length-$right_pos;$i++){
-                print "-1 ";
+        
+        for(my $i = 0;$i < $WE - $right_last;$i++){
+            if($right_pos == $length){
+                last;
             }
-            $right_pos = $length;
-            last;
+            $right[$right_pos] += $score;
+            print LOG "$score ";
+            $right_v[$right_pos] += $score*$score;
+            $right_n[$right_pos]++;
+            $right_pos++;
+            
         }
-        else{
-            last;
-        }
-    
+        $right_last = $WE;
     }
-    if(($right_pos==$length)&&($left_pos==$length)){
-        print LOG "\n";
+    elsif($RE<$WE){
+        last;
     }
-    seek(WIG,$SP,0);
     
+}
+if(($right_pos!=0)&&($left_pos!=0)){
+    print LOG "\n";
+}
+seek(WIG,$SP,0);
+
 }
 close LOG;
 close OUT;
