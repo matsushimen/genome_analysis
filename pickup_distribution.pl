@@ -137,10 +137,13 @@ while(my $line_pos = <POS>){
         elsif($RE<$WE){
             last;
         }
-        print LOG "\n";
+        if(($right_pos!=0)&&($left_pos!=0)){
+            print LOG "\n";
+        }
     }
 
     seek(WIG,$SP,0);
+    
 }
 close LOG;
 close OUT;
