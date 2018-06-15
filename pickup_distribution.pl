@@ -109,13 +109,11 @@ while(my $line_pos = <POS>){
             }
             $left_last = $WE;
         }
-        elsif($LE<$WS){
-            if($left_pos<$length){
-                for(my $i = 0;$i < $length-$left_pos;$i++){
-                    print "-1 ";
-                }
-                $left_pos = $length;
+        elsif(($LE<$WS)&&($left_pos<$length)){
+            for(my $i = 0;$i < $length-$left_pos;$i++){
+                print "-1 ";
             }
+            $left_pos = $length;
         }
         if((($RS<=$WS)&&($WS<=$RE))||(($RS<=$WE)&&($WE<=$RE))){
             if($right_pos == 0){
@@ -142,13 +140,14 @@ while(my $line_pos = <POS>){
             }
             $right_last = $WE;
         }
-        elsif($RE<$WS){
-            if($right_pos<$length){
-                for(my $i = 0;$i < $length-$right_pos;$i++){
-                    print "-1 ";
-                }
+        elsif(($RE<$WS)&&($right_pos<$length)){
+            for(my $i = 0;$i < $length-$right_pos;$i++){
+                print "-1 ";
             }
             $right_pos = $length;
+            last;
+        }
+        else{
             last;
         }
     
