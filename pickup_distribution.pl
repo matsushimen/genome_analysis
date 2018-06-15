@@ -92,6 +92,7 @@ while(my $line_pos = <POS>){
             if($WS > $left_last){#ギャップの穴埋め
                 for(my $i = 0;$i < $WS - $left_last;$i++){
                     print LOG "-1.0 ";
+                    exit(1);
                     $left_pos++;
                 }
                 $left_last = $WS;#スタート位置の移動
