@@ -77,7 +77,7 @@ while(my $line_pos = <POS>){
     my $right_last = 0;
     while(my $line_wig = <WIG>){
         chomp $line_wig;
-        if($line_wig =~ //){
+        if($line_wig =~ /#/){
             next;
         }#skip header
         my @wig_data = split /\s/,$line_wig;
@@ -139,13 +139,14 @@ while(my $line_pos = <POS>){
         elsif($RE<$WE){
             last;
         }
+        for(my $i = 0;$i < $length;$i++){#ベクトル書き出し
+            print LOG "$left_tmp[$i]" ;
+        }
+        for(my $i = 0;$i < $length;$i++){
+            print LOG "$right_tmp[$i] ";
+        }
     }
-    for(my $i = 0;$i < $length;$i++){#ベクトル書き出し
-        print LOG "$left_tmp[$i]" ;
-    }
-    for(my $i = 0;$i < $length;$i++){
-        print LOG "$right_tmp[$i] ";
-    }
+    
     print LOG "\n";
     seek(WIG,$SP,0);
 }
