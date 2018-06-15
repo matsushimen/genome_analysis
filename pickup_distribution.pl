@@ -77,13 +77,15 @@ while(my $line_pos = <POS>){
     my $right_last = 0;
     while(my $line_wig = <WIG>){
         chomp $line_wig;
-        if($line_wig =~ /#/){
+        if($line_wig =~ //){
             next;
         }#skip header
         my @wig_data = split /\s/,$line_wig;
         my $WS = $wig_data[1];#wig : start
         my $WE = $wig_data[2];#wig : end
         my $score = $wig_data[3];#wig : score
+        my @left_tmp;#ベクトル書き出し用
+        my @right_tmp;#ベクトル書き出し用
         if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){
             if($left_pos == 0){#first time at left, remind the position of start
                 $SP = tell(WIG);
@@ -91,6 +93,7 @@ while(my $line_pos = <POS>){
             }
             if($WS > $left_last){#ギャップの穴埋め
                 for(my $i = 0;$i < $WS - $left_last;$i++){
+                    $left_tmp[$left_pos] = -1;
                     $left_pos++;
                 }
                 $left_last = $WS;#スタート位置の移動
@@ -101,6 +104,7 @@ while(my $line_pos = <POS>){
                     last;
                 }
                 $left[$left_pos] += $score;
+                $left_tmp[$left_pos] = $score;
                 $left_v[$left_pos] += $score*$score;
                 $left_n[$left_pos]++;
                 $left_pos++;
@@ -113,6 +117,7 @@ while(my $line_pos = <POS>){
             }
             if($WS > $right_last){#前回位置から現在位置までのギャップの穴埋め
                 for(my $i = 0;$i < $WS - $right_last;$i++){
+                    $right_tmp[$right_pos] = -1;
                     $right_pos++;
                 }
                 $right_last = $WS#スタート位置の移動
@@ -121,9 +126,9 @@ while(my $line_pos = <POS>){
             for(my $i = 0;$i < $WE - $right_last;$i++){
                 if($right_pos == $length){
                     last;
-                    
                 }
                 $right[$right_pos] += $score;
+                $right_tmp = $score;
                 $right_v[$right_pos] += $score*$score;
                 $right_n[$right_pos]++;
                 $right_pos++;
@@ -136,10 +141,10 @@ while(my $line_pos = <POS>){
         }
     }
     for(my $i = 0;$i < $length;$i++){#ベクトル書き出し
-        print LOG "$left[$i]";
+        print LOG "$left_tmp[$i]";
     }
     for(my $i = 0;$i < $length;$i++){
-        print LOG "$right[$i]";
+        print LOG "$right_tmp[$i]";
     }
     print LOG,"\n";
     seek(WIG,$SP,0);
