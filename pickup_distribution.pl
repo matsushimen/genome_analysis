@@ -48,6 +48,7 @@ while(my $line_pos = <POS>){
     #print "serching at $line_pos\n";
     my @tmp_data = split /\s/,$line_pos;
     my $LS,$LE,$RS,$RE;
+    print LOG "$line_pos ";
     if($METHOD==0){
         $LS = $tmp_data[2] - $length;
         $LE = $tmp_data[2];
@@ -77,21 +78,24 @@ while(my $line_pos = <POS>){
     my $right_last = 0;
     while(my $line_wig = <WIG>){
         chomp $line_wig;
+        
         if($line_wig =~ /#/){
             next;
         }#skip header
-        my @wig_data = split /\s/,$line_wig;
+        my @wig_data = split /\s+/,$line_wig;
         my $WS = $wig_data[1];#wig : start
         my $WE = $wig_data[2];#wig : end
         my $score = $wig_data[3];#wig : score
-        if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){
-            if($left_pos == 0){#first time at left, remind the position of start
+    
+        if((($LS<=$WS)&&($WS<=$LE))||(($LS<=$WE)&&($WE<=$LE))){#PとWの一部分が被っているもしくはWがPの部分集合の時
+            if($left_pos == 0){#first time at left, remind the start position
                 $SP = tell(WIG);
                 $left_last = $LS;
             }
-            if($WS > $left_last){#ギャップの穴埋め
+            if($left_last < $WS){#ギャップの穴埋め
                 for(my $i = 0;$i < $WS - $left_last;$i++){
                     print LOG "-1 ";
+                    #print "$line_wig\n";
                     $left_pos++;
                 }
                 $left_last = $WS;#スタート位置の移動
@@ -111,11 +115,32 @@ while(my $line_pos = <POS>){
             $left_last = $WE;
         }
         
-        elsif(($LE<$WS)&&($left_pos==0)){
-            print "left $test\n";
-            for(my $i = 0;$i < $length;$i++){
-                print LOG "-1 ";
+        elsif(($WS<$LS)&&($LE<$WE)){#PがWの部分集合のとき
+            $SP = tell(WIG);
+            for(my $i = 0;$i < $length;$i++){#push score to @left
+                $left[$left_pos] += $score;
+                print LOG "$score ";
+                $left_v[$left_pos] += $score*$score;
+                $left_n[$left_pos]++;
                 $left_pos++;
+            }
+            $left_last = $LE;
+        }
+    
+        elsif($LE<$WS){
+            if($left_pos==0){
+                #print "left $test\n";
+                for(my $i = 0;$i < $length;$i++){
+                    print LOG "-1 ";
+                    $left_pos++;
+                }
+            }
+            elsif($left_pos<$length){
+                #print "$left_last\n";
+                for(my $i = 0;$i < $LE-$left_last;$i++){
+                    print LOG "-1 ";
+                }
+                $left_pos=$length;
             }
         }
         
@@ -144,12 +169,32 @@ while(my $line_pos = <POS>){
             }
             $right_last = $WE;
         }
-        
-        if(($RE<$WS)&&($right_pos==0)){
-            print "right $test\n";
-            for(my $i = 0;$i < $length;$i++){
-                print LOG "-1 ";
+        elsif(($WS<$RS)&&($RE<$WE)){#PがWの部分集合のとき
+            
+            for(my $i = 0;$i < $length;$i++){#push score to @left
+                $right[$right_pos] += $score;
+                print LOG "$score ";
+                $right_v[$right_pos] += $score*$score;
+                $right_n[$right_pos]++;
                 $right_pos++;
+            }
+            $right_last = $RE;
+            
+        }
+        if($RE<$WS){
+            if($right_pos==0){
+                #print "right $test\n";
+                for(my $i = 0;$i < $length;$i++){
+                    print LOG "-1 ";
+                    $right_pos++;
+                }
+            }
+            elsif($right_pos<$length){
+                #print "$right_last\n";
+                for(my $i = 0;$i < $RE-$right_last;$i++){
+                    print LOG "-1 ";
+                }
+                $right_pos=$length;
             }
             last;
         }
@@ -158,9 +203,31 @@ while(my $line_pos = <POS>){
         }
     
     }
+    if(($right_pos<$length)&&($right_pos!=0)){
+        #print "$right_last\n";
+        for(my $i = 0;$i < $RE-$right_last;$i++){
+            print LOG "-1 ";
+        }
+    }
+    if(($right_pos == 0)&&($left_pos == 0)){
+        for(my $i = 0;$i < $length*2 ;$i++){
+            print LOG "-1 ";
+        }
+    }
+    elsif(($right_pos==0)&&($left_pos!=0)){
+        #print "right $test\n";
+        for(my $i = 0;$i < $length-$left_pos;$i++){
+            print LOG "-1 ";
+        }
+        for(my $i = 0;$i < $length;$i++){
+            print LOG "-1 ";
+        }
+    }
+    $right_pos=$length;
+
     $test++;
     print LOG "\n";
-
+#print "\n";
     seek(WIG,$SP,0);
 
 }
