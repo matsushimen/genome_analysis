@@ -56,7 +56,7 @@ while(my $line_pos = <POS>){
         ($LS, $LE, $RS, $RE) = ($tmp_data[1] - $length, $tmp_data[1], $tmp_data[2], $tmp_data[2] + $length);
     }
     elsif($METHOD==2){
-        ($LS, $LE, $RS, $RE) = ($LS = $tmp_data[1] + $inner - $length, $tmp_data[1] + $inner, $tmp_data[2] - $inner, $tmp_data[2] - $inner + $length);
+        ($LS, $LE, $RS, $RE) = ($tmp_data[1] + $inner - $length, $tmp_data[1] + $inner, $tmp_data[2] - $inner, $tmp_data[2] - $inner + $length);
     }
     if($OPEN_FLUG){
         open WIG,"$INPUT_WIG"or die;
