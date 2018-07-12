@@ -50,32 +50,23 @@ while(my $line_pos = <POS>){
     my $LS,$LE,$RS,$RE;
     print LOG "$line_pos ";
     if($METHOD==0){
-        $LS = $tmp_data[2] - $length;
-        $LE = $tmp_data[2];
-        $RS = $tmp_data[1];
-        $RE = $tmp_data[1] + $length;
+        ($LS, $LE, $RS, $RE) = ($tmp_data[2] - $length, $tmp_data[2], $tmp_data[1], $tmp_data[1] + $length);
     }
     elsif($METHOD==1){
-        $LS = $tmp_data[1] - $length;
-        $LE = $tmp_data[1];
-        $RS = $tmp_data[2];
-        $RE = $tmp_data[2] + $length;
+        ($LS, $LE, $RS, $RE) = ($tmp_data[1] - $length, $tmp_data[1], $tmp_data[2], $tmp_data[2] + $length);
     }
     elsif($METHOD==2){
-        $LS = $tmp_data[1] + $inner - $length;
-        $LE = $tmp_data[1] + $inner;
-        $RS = $tmp_data[2] - $inner;
-        $RE = $tmp_data[2] - $inner + $length;
+        ($LS, $LE, $RS, $RE) = ($tmp_data[1] + $inner - $length, $tmp_data[1] + $inner, $tmp_data[2] - $inner, $tmp_data[2] - $inner + $length);
     }
     if($OPEN_FLUG){
         open WIG,"$INPUT_WIG"or die;
         $OPEN_FLUG = 0;
     }
-    my $left_pos = 0;#leftに入っているスコアの数
-    my $right_pos = 0;#rightに入っているスコアの数
+    my $left_pos = 0;#number of loaded score at left
+    my $right_pos = 0;#number of loaded score at right
     
-    my $left_last = 0;
-    my $right_last = 0;
+    my $left_last = 0;#previous loaded position at left
+    my $right_last = 0;#previous loaded position at right
     while(my $line_wig = <WIG>){
         chomp $line_wig;
         
@@ -98,7 +89,7 @@ while(my $line_pos = <POS>){
                     #print "$line_wig\n";
                     $left_pos++;
                 }
-                $left_last = $WS;#スタート位置の移動
+                $left_last = $WS;#move start position to previous position
             }
         
             for(my $i = 0;$i < $WE - $left_last;$i++){#push score to @left
