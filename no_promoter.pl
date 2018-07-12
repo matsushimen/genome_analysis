@@ -2,7 +2,7 @@ use Statistics::Lite qw(:all);
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 #オプション処理
 my ($INPUT_POS ,$INPUT_GENE, $OUTPUT_NAME, $length, $help) = ("","","",0,0);
-GetOptions('position|p=s' => \$INPUT_POS, 'gene|w=s' => \$INPUT_GENE, 'output|o=s' => \$OUTPUT_NAME, 'length|l=f' => \$length, 'help|h=i' => \$help);
+GetOptions('position|p=s' => \$INPUT_POS, 'gene|g=s' => \$INPUT_GENE, 'output|o=s' => \$OUTPUT_NAME, 'length|l=f' => \$length, 'help|h=i' => \$help);
 
 open POS,"$INPUT_POS"or die;
 open GEN,"$INPUT_GENE"or die;
