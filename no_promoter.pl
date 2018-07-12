@@ -1,4 +1,4 @@
-use Statictics::Lite qw(:all);
+use Statistics::Lite qw(:all);
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 #オプション処理
 my ($INPUT_POS ,$INPUT_GENE, $OUTPUT_NAME, $length, $help) = ("","","",0,0);
