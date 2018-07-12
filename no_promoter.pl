@@ -37,7 +37,7 @@ while(my $line_pos = <POS>){
             }
         }     
     }
-    if(!$PROM_FLAG){
+    if($PROM_FLAG==0){
             print OUT "$line_pos\n";
         }   
 }
