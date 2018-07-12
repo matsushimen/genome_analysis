@@ -40,7 +40,7 @@ for(my $i = 0;$i < $length;$i++){
     $right_n[$i] = 0;
 }
 my $SP = 0;
-my $OPEN_FLUG = 1;
+my $OPEN_FLAG = 1;
 open LOG,"> $LOG_NAME"or die;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
@@ -58,9 +58,9 @@ while(my $line_pos = <POS>){
     elsif($METHOD==2){
         ($LS, $LE, $RS, $RE) = ($tmp_data[1] + $inner - $length, $tmp_data[1] + $inner, $tmp_data[2] - $inner, $tmp_data[2] - $inner + $length);
     }
-    if($OPEN_FLUG){
+    if($OPEN_FLAG){
         open WIG,"$INPUT_WIG"or die;
-        $OPEN_FLUG = 0;
+        $OPEN_FLAG = 0;
     }
     my $left_pos = 0;#number of loaded score at left
     my $right_pos = 0;#number of loaded score at right
