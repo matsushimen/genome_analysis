@@ -1,12 +1,13 @@
 use Statistics::Lite qw(:all);
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 #オプション処理
-my ($INPUT ,$border_u,$border_t, $length_u, $length_t, $help) = ("",0,0,0,3000000000,0);
-GetOptions('input|i=s' => \$INPUT, 'bottom|b=f' => \$border_u, 'top|t=f' => \$border_t, 'short|s=f' => \$length_u, 'long|l=f' => \$length_t, 'help|h=i' => \$help);
+my ($INPUT ,$OUTPUT, $border_u,$border_t, $length_u, $length_t, $help) = ("","",0,0,0,3000000000,0);
+GetOptions('input|i=s' => \$INPUT, 'output|o=s' => \$OUTPUT, 'bottom|b=f' => \$border_u, 'top|t=f' => \$border_t, 'short|s=f' => \$length_u, 'long|l=f' => \$length_t, 'help|h=i' => \$help);
 
 if($help == 1){
     my $message = <<'EOS';
 [-i] [-input] : path of wiggle file
+[-o] [-output] : path of putput file
 [-b] [-bottom] : bottom border of score
 [-t] [-top] : top border of score
 [-s] [-short] : minimum length
@@ -20,6 +21,7 @@ if($INPUT eq ""){
     print "Error : no file inputted.\n";
     my $message = <<'EOS';
 [-i] [-input] : path of wiggle file
+[-o] [-output] : path of putput file
 [-b] [-bottom] : bottom border of score
 [-t] [-top] : top border of score
 [-s] [-short] : minimum length
@@ -30,6 +32,7 @@ EOS
 }
 
 open IN,"$INPUT"or die;
+open OUT,"> $OUTPUT"or die;
 $start = -1;
 $end = -1;
 @score = ();
@@ -53,7 +56,7 @@ while(my $line = <IN>){
                 }
                 else{
                     if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
-                        print "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
+                        print OUT "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
                     }
                     $start = -1;
                     $end = -1;
@@ -63,7 +66,7 @@ while(my $line = <IN>){
         else{
             if($start != -1){
                 if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
-                    print "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
+                    print OUT "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
                 }
                 $start = -1;
             }
@@ -72,10 +75,11 @@ while(my $line = <IN>){
     else{
         if($start!=-1){
             if(($length_t>=$end-$start)&&($end-$start>=$length_u)){
-                print "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
+                print OUT "$chr $start $end ",$end-$start," ",sum(@score)/($end-$start),"\n";
             }
         }
     }
     
 }
+close OUT;
 close IN;
