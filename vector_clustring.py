@@ -105,7 +105,7 @@ f.close()
 f = open('clu0_list.txt','w')
 g = open('clu1_list.txt','w')
 h = open('clu2_list.txt','w')
-i = open('clu3_list.txt','w')
+l = open('clu3_list.txt','w')
 
 for (i,j)in zip(pred,header):
     string = j + "\n"
