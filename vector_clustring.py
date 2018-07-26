@@ -101,6 +101,12 @@ for i in range(length):
     f.write(string)
     num += 1
 f.close()
+
+f = open('clu0_list.txt','w')
+g = open('clu1_list.txt','w')
+h = open('clu2_list.txt','w')
+i = open('clu3_list.txt','w')
+
 for (i,j)in zip(pred,header):
     string = j + "\n"
     if i == 0:
