@@ -59,10 +59,8 @@ X_pqcode = encoder.transform(np.array(data))
 kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=4)
 pred = kmeans.fit_predict(X_pqcode)
 
-#print (pred)
 
 for (i,j) in zip(pred,data):
-    #print(j)
     if i == 0:
         array_add(clu0,j,count0)
     elif i == 1:
@@ -71,7 +69,7 @@ for (i,j) in zip(pred,data):
         array_add(clu2,j,count2)
     elif i == 3:
         array_add(clu3,j,count3)
-<<<<<<< HEAD
+
 num = 0
 f = open('clu0.txt','w')
 for i in range(length):
@@ -102,41 +100,7 @@ for i in range(length):
     string = str(str(num) + " " + clu3[i]/count3[i]) + " " + str(int(count3[i])) + "\n"
     f.write(string)
     num++
-=======
-
-f = open('clu0.txt','w')
-for i in range(length):
-    string = str(clu0[i]/count0[i]) + " " + str(int(count0[i])) + "\n"
-    f.write(string)
 f.close()
-
-f = open('clu1.txt','w')
-for i in range(length):
-    string = str(clu1[i]/count1[i]) + " " + str(int(count1[i])) + "\n"
-    f.write(string)
-f.close()
-
-f = open('clu2.txt','w')
-for i in range(length):
-    string = str(clu2[i]/count2[i]) + " " + str(int(count2[i])) + "\n"
-    f.write(string)
-f.close()
-
-f = open('clu3.txt','w')
-for i in range(length):
-    string = str(clu3[i]/count3[i]) + " " + str(int(count3[i])) + "\n"
-    f.write(string)
->>>>>>> 3fa48e9b7900b4f8a5a28db2ffd61f19f393f47c
-f.close()
-
-f = open('clu0_list.txt','w')
-g = open('clu1_list.txt','w')
-h = open('clu2_list.txt','w')
-l = open('clu3_list.txt','w')
-<<<<<<< HEAD
-
-=======
->>>>>>> 3fa48e9b7900b4f8a5a28db2ffd61f19f393f47c
 for (i,j)in zip(pred,header):
     string = j + "\n"
     if i == 0:
