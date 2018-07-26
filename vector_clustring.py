@@ -75,7 +75,7 @@ f = open('clu0.txt','w')
 for i in range(length):
     string = str(num) + " " + str(clu0[i]/count0[i]) + " " + str(int(count0[i])) + "\n"
     f.write(string)
-    num++
+    num += 1
 f.close()
 
 num=0
@@ -83,7 +83,7 @@ f = open('clu1.txt','w')
 for i in range(length):
     string = str(num) + " " + str(clu1[i]/count1[i]) + " " + str(int(count1[i])) + "\n"
     f.write(string)
-    num++
+    num += 1
 f.close()
 
 num = 0
@@ -91,7 +91,7 @@ f = open('clu2.txt','w')
 for i in range(length):
     string = str(str(num) + " " + clu2[i]/count2[i]) + " " + str(int(count2[i])) + "\n"
     f.write(string)
-    num++
+    num += 1
 f.close()
 
 num = 0
@@ -99,7 +99,7 @@ f = open('clu3.txt','w')
 for i in range(length):
     string = str(str(num) + " " + clu3[i]/count3[i]) + " " + str(int(count3[i])) + "\n"
     f.write(string)
-    num++
+    num += 1
 f.close()
 for (i,j)in zip(pred,header):
     string = j + "\n"
