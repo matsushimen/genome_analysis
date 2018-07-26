@@ -89,7 +89,7 @@ f.close()
 num = 0
 f = open('clu2.txt','w')
 for i in range(length):
-    string = str(str(num) + " " + clu2[i]/count2[i]) + " " + str(int(count2[i])) + "\n"
+    string = str(num) + " " + str(clu2[i]/count2[i]) + " " + str(int(count2[i])) + "\n"
     f.write(string)
     num += 1
 f.close()
@@ -97,7 +97,7 @@ f.close()
 num = 0
 f = open('clu3.txt','w')
 for i in range(length):
-    string = str(str(num) + " " + clu3[i]/count3[i]) + " " + str(int(count3[i])) + "\n"
+    string = str(num) + " " + str(clu3[i]/count3[i]) + " " + str(int(count3[i])) + "\n"
     f.write(string)
     num += 1
 f.close()
