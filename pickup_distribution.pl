@@ -86,6 +86,7 @@ while(my $line_pos = <POS>){
             if($left_last < $WS){#ギャップの穴埋め
                 for(my $i = 0;$i < $WS - $left_last;$i++){
                     print LOG "-1 ";
+                    #print "$line_wig\n";
                     $left_pos++;
                 }
                 $left_last = $WS;#move start position to previous position
