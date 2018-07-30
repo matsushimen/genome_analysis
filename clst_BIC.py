@@ -1,7 +1,7 @@
 import scipy
 import numpy as np
 import sys,re
-from scipy.cluster.hierarchy import linkage, dendrogram
+from sklearn.metrics import mean_squared_error
 import pqkmeans
 
 def array_add(l1,l2,c):
@@ -46,7 +46,13 @@ X_pqcode = encoder.transform(np.array(data))
 for clst_num in range(2,10):
     kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=clst_num)
     pred = kmeans.fit_predict(X_pqcode)
-    sse = kmeans.inertia_#誤差平方和
+    clu = [ np.array([0.]*length) for i in range(clst_num)]
+    count = [ np.array([0.]*length) for i in range(clst_num)]
+    for (i,j) in zip(pred,data):
+        array_add(clu[i],j,count[i])
+
+
+    sse = np.sum( np.sum((clu[i]-np.mean(clu[i])**2)) for i in range(clst_num))#誤差平方和
     n = dlength
     BIC = n*np.log(sse/n)+length*np.log(n)
     print("k = %d BIC = %.3f"%(clst_num, BIC))
