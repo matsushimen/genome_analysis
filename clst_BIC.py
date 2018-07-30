@@ -52,8 +52,11 @@ for clst_num in range(2,10):
     for (i,j) in zip(pred,data):
         array_add(clu[i],j,count[i])
 
+    sse = 0
+    for i in range(clst_num):
+        for x in clu[i]:
+            sse += (x - np.mean(clu[i]))**2
 
-    sse = np.sum( (np.sum((x-np.mean(clu[i]))**2) for x in clu[i] ) for i in range(clst_num))#誤差平方和
     n = dlength
     BIC = n*np.log(sse/n)+length*np.log(n)
     print("k = %d BIC = %.3f"%(clst_num, BIC))
