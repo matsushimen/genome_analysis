@@ -13,7 +13,7 @@ def array_add(l1,l2,c):
 
 argvs = sys.argv
 filename = argvs[1]
-clst_num = argvs[2]
+clst_num = int(argvs[2])
 data = []
 header = []
 flag = 0
