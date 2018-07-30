@@ -41,6 +41,7 @@ f.close()
 print(length)
 
 for i in range(clst_num):#make default clst data
+    clu[i] = np.array()
     clu[i] = np.array([0.]*length)
     count[i] = np.array([0.]*length)
 
