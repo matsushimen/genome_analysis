@@ -45,7 +45,7 @@ count = [ np.array([0.]*length) for i in range(clst_num)]
 ###
 ###clustering
 encoder = pqkmeans.encoder.PQEncoder(num_subdim=4, Ks=256)
-encoder.fit(np.array(data[:10000]))
+encoder.fit(np.array(data[:1000]))
 X_pqcode = encoder.transform(np.array(data))
 kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=clst_num)
 pred = kmeans.fit_predict(X_pqcode)
