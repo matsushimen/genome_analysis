@@ -67,7 +67,7 @@ for i in range(clst_num):
 g=[]
 for i in range(clst_num):
     output_list = direc + '/clu' + str(i) + '_list.txt'
-    g[i] = open(output_list,'w')
+    g.append(open(output_list,'w'))
 
 for (i,j)in zip(pred,header):
     hdr = j + '\n'
