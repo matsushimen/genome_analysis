@@ -39,8 +39,6 @@ for line in f.readlines():
         header.append(line)
 f.close()
 print(length)
-clu = [ np.array([0.]*length) for i in range(clst_num)]
-count = [ np.array([0.]*length) for i in range(clst_num)]
 ###clustering
 encoder = pqkmeans.encoder.PQEncoder(num_subdim=4, Ks=256)
 encoder.fit(np.array(data[:1000]))
