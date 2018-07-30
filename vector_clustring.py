@@ -64,15 +64,15 @@ for i in range(clst_num):
         f.write(string)
         num += 1
     f.close()
-
+g=[]
 for i in range(clst_num):
     output_list = direc + '/clu' + str(i) + '_list.txt'
-    f[i] = open(output_list,'w')
+    g[i] = open(output_list,'w')
 
 for (i,j)in zip(pred,header):
     hdr = j + '\n'
-    f[i].write(hdr)
+    g[i].write(hdr)
 
 for i in range(clst_num):
-    f[i].close()
+    g[i].close()
 
