@@ -3,6 +3,7 @@ import numpy as np
 import sys,re
 from sklearn.metrics import mean_squared_error
 import pqkmeans
+import random
 
 def array_add(l1,l2,c):
     length = len(l1)
