@@ -1,12 +1,8 @@
 import scipy
 import numpy as np
-import scipy.spatial.distance as distance
 import sys,re
-from matplotlib.pyplot import show
 from scipy.cluster.hierarchy import linkage, dendrogram
-from sklearn.cluster import KMeans
 import pqkmeans
-import pandas as pd
 
 def array_add(l1,l2,c):
     length = len(l1)
@@ -17,6 +13,7 @@ def array_add(l1,l2,c):
 
 argvs = sys.argv
 filename = argvs[1]
+clst_num = int(argvs[2])
 data = []
 header = []
 flag = 0
@@ -42,82 +39,39 @@ for line in f.readlines():
         header.append(line)
 f.close()
 print(length)
-clu0 = np.array([0.]*length)
-clu1 = np.array([0.]*length)
-clu2 = np.array([0.]*length)
-clu3 = np.array([0.]*length)
+clu = [ np.array([0.]*length) for i in range(clst_num)]
+count = [ np.array([0.]*length) for i in range(clst_num)]
 
-count0 = np.array([0.]*length)
-count1 = np.array([0.]*length)
-count2 = np.array([0.]*length)
-count3 = np.array([0.]*length)
 ###
 ###clustering
 encoder = pqkmeans.encoder.PQEncoder(num_subdim=4, Ks=256)
 encoder.fit(np.array(data[:1000]))
 X_pqcode = encoder.transform(np.array(data))
-kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=4)
+kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=clst_num)
 pred = kmeans.fit_predict(X_pqcode)
 
 
 for (i,j) in zip(pred,data):
-    if i == 0:
-        array_add(clu0,j,count0)
-    elif i == 1:
-        array_add(clu1,j,count1)
-    elif i == 2:
-        array_add(clu2,j,count2)
-    elif i == 3:
-        array_add(clu3,j,count3)
+    array_add(clu[i],j,count[i])
 
-num = 0
-f = open('clu0.txt','w')
-for i in range(length):
-    string = str(num) + " " + str(clu0[i]/count0[i]) + " " + str(int(count0[i])) + "\n"
-    f.write(string)
-    num += 1
-f.close()
+for i in range(clst_num):
+    num = 0
+    output = 'clu' + str(i) + '.txt'
+    f = open(output,'w')
+    for j in range(length):
+        string = str(num) + " " + str(clu[i][j]/count[i][j]) + " " + str(int(count[i][j])) + "\n"
+        f.write(string)
+        num += 1
+    f.close()
 
-num=0
-f = open('clu1.txt','w')
-for i in range(length):
-    string = str(num) + " " + str(clu1[i]/count1[i]) + " " + str(int(count1[i])) + "\n"
-    f.write(string)
-    num += 1
-f.close()
-
-num = 0
-f = open('clu2.txt','w')
-for i in range(length):
-    string = str(num) + " " + str(clu2[i]/count2[i]) + " " + str(int(count2[i])) + "\n"
-    f.write(string)
-    num += 1
-f.close()
-
-num = 0
-f = open('clu3.txt','w')
-for i in range(length):
-    string = str(num) + " " + str(clu3[i]/count3[i]) + " " + str(int(count3[i])) + "\n"
-    f.write(string)
-    num += 1
-f.close()
-
-f = open('clu0_list.txt','w')
-g = open('clu1_list.txt','w')
-h = open('clu2_list.txt','w')
-l = open('clu3_list.txt','w')
+for i in range(clst_num):
+    output_list = 'clu' + str(i) + '_list.txt'
+    f[i] = open(output_list,'w')
 
 for (i,j)in zip(pred,header):
-    string = j + "\n"
-    if i == 0:
-        f.write(string)
-    elif i == 1:
-        g.write(string)
-    elif i == 2:
-        h.write(string)
-    elif i == 3:
-        l.write(string)
-f.close()
-g.close()
-h.close()
-l.close()
+    hdr = j + '\n'
+    f[i].write(hdr)
+
+for i in range(clst_num):
+    f[i].close()
+
