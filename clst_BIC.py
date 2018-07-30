@@ -39,9 +39,8 @@ for line in f.readlines():
         header.append(line)
 f.close()
 print(length)
-
+clu = []
 for i in range(clst_num):#make default clst data
-    clu[i] = np.array()
     clu[i] = np.array([0.]*length)
     count[i] = np.array([0.]*length)
 
