@@ -41,7 +41,7 @@ f.close()
 print(length)
 ###clustering
 encoder = pqkmeans.encoder.PQEncoder(num_subdim=4, Ks=256)
-encoder.fit(np.array(data[:1000]))
+encoder.fit(np.array(random.sample(data,1000)))
 X_pqcode = encoder.transform(np.array(data))
 for clst_num in range(2,10):
     kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=clst_num)
