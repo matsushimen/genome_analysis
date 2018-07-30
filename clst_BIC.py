@@ -45,7 +45,7 @@ count = [ np.array([0.]*length) for i in range(clst_num)]
 encoder = pqkmeans.encoder.PQEncoder(num_subdim=4, Ks=256)
 encoder.fit(np.array(data[:1000]))
 X_pqcode = encoder.transform(np.array(data))
-for clst_num in range(2,10)
+for clst_num in range(2,10):
     kmeans = pqkmeans.clustering.PQKMeans(encoder=encoder, k=clst_num)
     pred = kmeans.fit_predict(X_pqcode)
     sse = kmeans.inertia_#誤差平方和
