@@ -14,6 +14,7 @@ def array_add(l1,l2,c):
 argvs = sys.argv
 filename = argvs[1]
 clst_num = int(argvs[2])
+direc = argvs[3]
 data = []
 header = []
 flag = 0
@@ -56,7 +57,7 @@ for (i,j) in zip(pred,data):
 
 for i in range(clst_num):
     num = 0
-    output = 'clu' + str(i) + '.txt'
+    output = direc + '/clu' + str(i) + '.txt'
     f = open(output,'w')
     for j in range(length):
         string = str(num) + " " + str(clu[i][j]/count[i][j]) + " " + str(int(count[i][j])) + "\n"
@@ -65,7 +66,7 @@ for i in range(clst_num):
     f.close()
 
 for i in range(clst_num):
-    output_list = 'clu' + str(i) + '_list.txt'
+    output_list = direc + '/clu' + str(i) + '_list.txt'
     f[i] = open(output_list,'w')
 
 for (i,j)in zip(pred,header):
