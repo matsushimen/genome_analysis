@@ -24,7 +24,7 @@ while(my $pos_line = <POS>){
                 $tel_rig = tell(RIG);#場所の記憶
                 $flag = 1;
             }
-            push($rig_data[1],@score);#硬さスコアの平均の計算
+            push(@score,$rig_data[1]);#硬さスコアの平均の計算
         }
         elsif($flag==0){
             next;
