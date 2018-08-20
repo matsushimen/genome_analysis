@@ -27,9 +27,11 @@ while(my $pos_line = <POS>){
             push(@score,$rig_data[1]);#硬さスコアの平均の計算
         }
         elsif($flag==0){
+            print("hogehoge\n");
             next;
         }
         else{
+            print("hoge\n");
             last;
         }
     }
