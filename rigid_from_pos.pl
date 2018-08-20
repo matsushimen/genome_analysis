@@ -1,7 +1,7 @@
 use Statistics::Lite;
-my $INPUT_POS = $ARGV[1];
-my $RIGID = $ARGV[2];
-my $OUT = $ARGV[3];
+my $INPUT_POS = $ARGV[0];
+my $RIGID = $ARGV[1];
+my $OUT = $ARGV[2];
 open POS,"$INPUT_POS"or die;
 open RIG,"$RIGID"or die;
 open OUT,"> $OUT"or die;
