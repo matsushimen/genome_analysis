@@ -1,4 +1,4 @@
-use Statistics::Lite;
+use Statistics::Lite qw(:all);
 my $INPUT_POS = $ARGV[0];
 my $RIGID = $ARGV[1];
 my $OUT = $ARGV[2];
