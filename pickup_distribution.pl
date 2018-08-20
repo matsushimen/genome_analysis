@@ -31,6 +31,8 @@ EOS
     exit(1);
 }
 my $test = 0;
+my (@left,@right,@left_v,@right_v,@left_n,@right_n);
+
 for(my $i = 0;$i < $length;$i++){
     $left[$i] = 0;
     $right[$i] = 0;
@@ -41,13 +43,14 @@ for(my $i = 0;$i < $length;$i++){
 }
 my $SP = 0;
 my $OPEN_FLAG = 1;
+my $LS,$LE,$RS,$RE;
 open LOG,"> $LOG_NAME"or die;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
     chomp $line_pos;
     #print "serching at $line_pos\n";
     my @tmp_data = split /\s/,$line_pos;
-    my $LS,$LE,$RS,$RE;
+
     print LOG "$line_pos ";
     if($METHOD==0){
         ($LS, $LE, $RS, $RE) = ($tmp_data[2] - $length, $tmp_data[2], $tmp_data[1], $tmp_data[1] + $length);
