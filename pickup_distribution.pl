@@ -43,7 +43,7 @@ for(my $i = 0;$i < $length;$i++){
 }
 my $SP = 0;
 my $OPEN_FLAG = 1;
-my $LS,$LE,$RS,$RE;
+my ($LS,$LE,$RS,$RE);
 open LOG,"> $LOG_NAME"or die;
 open POS,"$INPUT_POS"or die;
 while(my $line_pos = <POS>){
@@ -233,18 +233,18 @@ for(my $i = 0;$i < $length;$i++){
     if($left_n[$i] == 0){
         $left_n[$i] = 1;
     }
-    $mean = $left[$i]/$left_n[$i];
-    $variance = $left_v[$i]/$left_n[$i]-$mean*$mean;
-    print OUT "$i $mean $variance $left_n[$i]\n"
+    my $man = $left[$i]/$left_n[$i];
+    my $var = $left_v[$i]/$left_n[$i]-$man*$man;
+    print OUT "$i $man $var $left_n[$i]\n"
 }
 for(my $i = 0;$i < $length;$i++){
     if($right_n[$i] == 0){
         $right_n[$i] = 1;
     }
-    $mean = $right[$i]/$right_n[$i];
-    $variance = $right_v[$i]/$right_n[$i]-$mean*$mean;
+    my $man = $right[$i]/$right_n[$i];
+    my $var = $right_v[$i]/$right_n[$i]-$man*$man;
     my $num = $i + $length;
-    print OUT "$num $mean $variance $right_n[$i]\n"
+    print OUT "$num $man $var $right_n[$i]\n"
 }
 close OUT;
 print "$test\n";
