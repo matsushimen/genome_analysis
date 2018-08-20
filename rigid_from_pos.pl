@@ -19,6 +19,7 @@ while(my $pos_line = <POS>){
     while(my $rig_line = <RIG>){
         chomp($rig_line);
         my @rig_data = split(/\s/,$rig_line);
+        print($rig_line,"\n");
         if(($start_pos <= $rig_data[0])&&($rig_data[0] < $end_pos)){
             if($flag == 0){
                 $tel_rig = tell(RIG);#場所の記憶
@@ -27,7 +28,7 @@ while(my $pos_line = <POS>){
             push(@score,$rig_data[1]);#硬さスコアの平均の計算
         }
         elsif($flag==0){
-            print("hogehoge\n");
+            #print("hogehoge\n");
             next;
         }
         else{
