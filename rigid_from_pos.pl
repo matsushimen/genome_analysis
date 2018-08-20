@@ -13,7 +13,7 @@ while(my $pos_line = <POS>){
     my $end_pos = $pos_data[2];
     my @score = ();
     my $flag = 0;
-    print("$start_pos $end_pos\n");
+    #print("$start_pos $end_pos\n");
 
     seek(RIG,$tel_rig,0);
 
@@ -33,7 +33,7 @@ while(my $pos_line = <POS>){
             next;
         }
         else{
-            print("hoge\n");
+            #print("hoge\n");
             last;
         }
     }
