@@ -44,11 +44,11 @@ def matrix_calc(file1,file2):
 
 def draw_heatmap(data,savename):
     fig,ax = plt.subplots()
-    heatmap = ax.pcolor(data, cmap=plt.cm.Reds)
+    heatmap = ax.pcolor(data, cmap=plt.cm.Blues)
 
     ax.invert_yaxis()
     ax.xaxis.tick_top()
-
+    fig.colorbar(heatmap)
     plt.show()
     plt.savefig(savename)
 
