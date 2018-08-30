@@ -1,6 +1,9 @@
 my $F_FLAG = 0;
 my $OUT = shift @ARGV;
 my @inputs = @ARGV;
+my @matrix_n;
+my @matrix_s;
+my $length;
 foreach my $INPUT(@inputs){
     open IN,"$INPUT"or die;
     my $n = 0;
