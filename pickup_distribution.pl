@@ -51,7 +51,7 @@ while(my $line_pos = <POS>){
     #print "serching at $line_pos\n";
     my @tmp_data = split /\s/,$line_pos;
 
-    print LOG "$line_pos ";
+    print LOG "$tmp_data[0] $tmp_data[1] $tmp_data[2] $tmp_data[3] $tmp_data[4] ";
     if($METHOD==0){
         ($LS, $LE, $RS, $RE) = ($tmp_data[2] - $length, $tmp_data[2], $tmp_data[1], $tmp_data[1] + $length);
     }
