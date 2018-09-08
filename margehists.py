@@ -41,9 +41,13 @@ number_values = []
 #append to lists
 for name in labels:
     mean_values.append(means[name]/number[name])
-    variance_values.append((meansquare[name]-means[name])/number[name])
+    variance_values.append((meansquare[name]-means[name]*means[name])/(number[name]-1))
     number_values.append(number[name])
+
+mean_values = np.array(mean_values)
+variance_values = np.array(variance_values)
+number_values = np.array(number_values)
 
 plt.figure()
 plt.bar(range(len(labels)), mean_values)
-plt.savefig(savename,transparent=True)
+plt.savefig(savename,transparent=True,yerr=np.sqrt(variance_values/number_values))
